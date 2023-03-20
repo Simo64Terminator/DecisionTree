@@ -1,0 +1,22 @@
+viaggia_1
+viaggia_1 lavoro_1 =Si lavoro_2 =No
+lavoro_1 carico_1 =PE carico_2 =ME carico_3 =BA
+lavoro_2 carico_4 =PE carico_5 =ME carico_6 =BA
+carico_1 spazio_1 =500 spazio_2 =1000
+carico_2 spazio_3 =500 spazio_4 =1000
+carico_3 spazio_5 =500 spazio_6 =1000
+carico_4 spazio_7 =500 spazio_8 =1000
+carico_5 spazio_9 =500 spazio_10 =1000
+carico_6 spazio_11 =500 spazio_12 =1000
+spazio_1 END_1 =Portatile_Workstation_500GB
+spazio_2 END_2 =Portatile_Workstation_1000GB
+spazio_3 END_3 =Portatile_Gaming_500GB
+spazio_4 END_4 =Portatile_Gaming_1000GB
+spazio_5 END_5 =Portatile_Ufficio_500GB
+spazio_6 END_6 =Portatile_Ufficio_1000GB
+spazio_7 END_7 =Fisso_Workstation_500GB
+spazio_8 END_8 =Fisso_Workstation_1000GB
+spazio_9 END_9 =Fisso_Gaming_500GB
+spazio_10 END_10 =Fisso_Gaming_1000GB
+spazio_11 END_11 =Fisso_Ufficio_500GB
+spazio_12 END_12 =Fisso_Ufficio_1000GB

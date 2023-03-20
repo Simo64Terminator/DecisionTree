@@ -1,0 +1,10 @@
+viaggia_1
+viaggia_1 lavoro_1 =si lavoro_2 =No
+lavoro_1 carico_1 =PE carico_2 =ME carico_3 =BA
+lavoro_2 carico_4 =PE carico_5 =ME carico_6 =BA
+carico_1 END_1 =Portatile_Workstation
+carico_2 END_2 =Portatile_Gaming
+carico_3 END_3 =Portatile_Ufficio
+carico_4 END_4 =Fisso_Workstation
+carico_5 END_5 =Fisso_Gaming
+carico_6 END_6 =Fisso_Ufficio

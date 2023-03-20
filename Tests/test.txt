@@ -1,0 +1,229 @@
+//Ricorsiva
+d_tree::Label d_tree::compare(const Tree& t)
+{
+	if(isEmpty(t)) return emptyLabel;
+	
+	if(isEmpty(((t->edgeList)->node)->edgeList) return (t->edgeList)->label;
+	
+	Label l = userChoice(t);
+	
+	Edge auxE = t->edgeList;
+	Label result = emptyLabel;
+
+	while(!isEmpty(auxE))
+	{
+		if(compareEdge(l, auxE))
+		{
+			result = compare(auxE->node);
+			auxE = emptyEdge;
+		}
+		else
+			auxE = auxE->nextEdge;
+	}
+		
+	return result;
+}
+
+
+//Ausiliaria, usata per far scegliere all'utente una stringa
+d_tree::Label d_tree::userChoice(const Tree& t)
+{	
+	//Scorrimento nella lista degli archi
+	Edge tmp = t->edgeList;
+
+	cout << "\n - Tipo: " << t->label << " - Le possibili decisioni sono:\n";
+	while(!isEmpty(tmp)){
+		cout << " - " << tmp->label << "\n";
+		tmp = tmp->nextEdge;
+	}
+	cout << "\n";
+	
+	cout << "Inserisci il valore/la stringa: ";
+	Label aux;
+	cin >> aux;
+	removeBlanksAndLower(aux);
+	
+	return aux;
+}
+
+
+//Comparazione
+bool d_tree::compareEdge(Label l, Edge auxE)
+{
+	op operation = opDefinition(auxE->label);
+	
+	Label edgeValue = auxE->label.substr(operation.dim, auxE->label.size());
+	
+	if(isNumber(l))
+	{
+		int lInt = stoi(l);
+		
+		int eInt;
+		
+		if(isNumber(edgeValue))
+			eInt = stoi(edgeValue);
+		else
+			throw runtime_error("\nErrore - Incompatibilità di tipi (int non è compatibile con label)\n");
+		
+		return(compareInt(operation, lInt, eInt));
+	}
+	else
+	{
+		if(isNumber(edgeLabel))
+			throw runtime_error("\nErrore - Incompatibilità di tipi (label non è compatibile con int)\n");
+			
+		if(operation.k != OP_UGUALE && operation.k != OP_DIVERSO)
+			throw runtime_error("\nErrore - Una variabile categorica non può avere confronti diversi da 'Uguale' o 'Diverso'\n");
+			
+		return((operation.k == OP_UGUALE && !l.compare(edgeValue)) || (operation.k == OP_DIVERSO && l.compare(edgeValue)));
+	}
+}
+
+
+d_tree::op d_tree::opDefinition(const label a)
+{
+	op o;
+	
+	switch(a[0]){
+		case '!':
+			if(a[1] == '=')
+			{
+				o.dim = 2;
+				o.k = OP_DIVERSO;
+			}
+			else
+				throw runtime_error("\nErrore - Carattere 'diverso' incompleto");
+				
+			break;
+		case '=':
+			o.dim = 1;
+			o.k = OP_UGUALE;
+			break;
+		case '<':
+			if(a[1] == '=')
+			{
+				o.dim = 2;
+				o.k = OP_MINOREUGUALE;
+			}
+			else
+			{
+				o.dim = 1;
+				o.k = OP_MINORE;
+			}
+			break;
+		case '>':
+			if(a[1] == '=')
+			{
+				o.dim = 2;
+				o.k = OP_MAGGIOREUGUALE;
+			}
+			else
+			{
+				o.dim = 1;
+				o.k = OP_MAGGIORE;
+			}
+			break;
+		default:
+			throw runtime_error("\nErrore - Carattere di comparazione non trovato in un arco\n");
+			break;
+	}
+	
+	return o;	
+}
+
+
+//Comprensione se la stringa inserita è un valore o una stringa
+bool d_tree::isNumber(const Label l)
+{
+	for(int i = 0; i < l.size()-1; ++i)
+	{
+		if((l[i] >= 'a') && (l[i] <= 'z'))
+			return false;
+	}
+
+	return true;
+}
+
+
+bool d_tree::compareInt(op o, int I1, int I2)
+{
+	switch(o.k){
+		case OP_UGUALE:
+			if(I1 == I2)
+				return true;
+		case OP_DIVERSO:
+			if(I1 != I2)
+				return true;
+		case OP_MINOREUGUALE:
+			if(I1 <= I2)
+				return true;
+		case OP_MINORE:
+			if(I1 < I2)
+				return true;
+		case OP_MAGGIOREUGUALE:
+			if(I1 >= I2)
+				return true
+		case OP_MAGGIORE:
+			if(I1 > I2)
+				return true;
+		default:
+			return false;
+	}
+
+	return false;
+}
+
+
+
+//Restituisco una lista con tutti i figli di un nodo
+list::List d_tree::children(const Label l, const Tree& t)
+{
+	//Cerco il nodo padre e preparo una lista vuota
+	Tree auxT = getNode(l, t);
+	list::List lst = list::createEmpty();
+	
+	if(!isEmpty(auxT))
+	{
+		//Punto ai figli di l
+		Edge child = auxT->edgeList;
+			//Non convertite
+		//Scorro per tutti i figli di l
+		while(!isEmpty(child))
+		{
+			list::addBack((child->node)->label, lst);	//Aggiungo il label dei figli di l alla lista
+			child = child->nextEdge;
+		}
+	}
+	
+	//Ritorno la lista
+	return lst;
+}
+
+
+
+d_tree::Label d_tree::normalizeVariable(Label l)
+{
+	Label aux = l;
+	
+	int found = aux.find_last_of("_");
+
+	aux = aux.substr(0, found);
+
+	return aux;
+}
+
+	const string menu = "-------------------------------------------------------------------\n\t\t\t\tMENU\n-------------------------------------------------------------------\n1. Lettura albero di decisione da file\n2. Inserimento di un nodo etichettato labelFiglio attaccato a un padre etichettato labelPadre\n3. Cancellazione di un nodo dall'albero\n4. Modifica di un nodo dall'albero\n5. Visualizzazione albero di decisione\n6. Stampa variabili dell'albero di decisione\n7. Effettua predizione inserendo i valori uno alla volta\n8. Effettua predizione inserendo tutti i valori all'inizio\n0. Uscita\n\nFornisci la tua scelta ---> ";
+
+
+
+
+
+
+
+
+
+
+
+
+
+

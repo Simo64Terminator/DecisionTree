@@ -1,0 +1,4 @@
+eta
+eta maggiorenne >=18 minore <18
+maggiorenne END_1 =maggiorenne
+minore END_2 =minore
