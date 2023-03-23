@@ -1,8 +1,7 @@
 #include "stringUtility.h"
 
-//Funzioni standardizzazione stringhe
+// Functions used to standardize/manipulate strings
 
-//Elimina gli spazi
 void removeBlanksAndLower(string& s)
 {
 	size_t found = s.find_first_of(" ");
@@ -16,7 +15,7 @@ void removeBlanksAndLower(string& s)
 	stringLower(s);
 }
 
-//Prende tutta la stringa e normalizza tutti i caratteri in minuscolo
+
 void stringLower(string& s)
 {
 	for(string::size_type i=0; i < s.length(); ++i)

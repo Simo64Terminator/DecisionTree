@@ -1,3 +1,6 @@
+#ifndef DECISIONTREE_H
+#define DECISIONTREE_H
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -164,6 +167,4 @@ namespace d_tree{
 //Funzioni per input/output, non facenti parte del TDD Tree
 d_tree::Tree readFromFile(string);
 
-
-
-
+#endif

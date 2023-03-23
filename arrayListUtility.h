@@ -1,3 +1,6 @@
+#ifndef ARRAYLISTUTILITY_H
+#define ARRAYLISTUTILITY_H
+
 #include <iostream>
 
 using namespace std;
@@ -32,3 +35,5 @@ namespace list{
 	int size(const List&);				//Restituisco la dimensione della lista
 
 }
+
+#endif

@@ -1,11 +1,3 @@
-//Tomasella Simone - 5311626 - Laboratorio finale corso di ASD
-//
-//Per compilare scrivere "g++ decisionTreeMain.cpp decisionTreeFunc.cpp stringUtilityFunc.cpp arrayListUtility.cpp"
-//
-//Per fare questo esercizio ho deciso di usare un albero generico con implementazione con lista di puntatori/con lista di archi
-//Per realizzare le funzioni mi sono ispirato alle funzioni delle correzioni del laboratorio 7 uniti ad alcune definizioni del laboratorio 4 per definire l'operatore negli archi
-//Per realizzare l'interfaccia mi sono ispirato alla struttura dei menu dei laboratori passati
-
 #include "decisionTree.h"
 
 using namespace d_tree;
