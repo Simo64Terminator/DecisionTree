@@ -17,50 +17,50 @@ list::List list::createEmpty()
 	return l;
 }
 
-// re-use add function to add at the rear of the array
+// re-use add function to do a rear add
 void list::addBack(Elem e, List& l)
 {
 	add(l.size, e, l);
 }
 
-// Aggiungo un elemento in una posizione data da pos
+// Add in "pos" position
 void list::add(int pos, Elem e, List& l)
 {
-	// Checking position value
+	// Checking "pos" value
 	if(pos < 0 || pos > l.size) return;	
 	
-	// Scatta il ridimensionamento
+	// Resizing d_array
 	if(l.size == l.maxsize)
 	{
-		// Creo un nuovo array dinamico con spazio aggiunto
+		// Creating aux d_array with more space
 		List aux;
 		aux.size = l.size + 1;
 		aux.maxsize = l.maxsize + BLOCKDIM;
 		Elem* tmp = new Elem[aux.maxsize];
 		aux.list = tmp;
 		
-		// Salvo il contenuto prima di pos
+		// Saving elements before "pos"
 		for(int i = 0; i < pos; ++i)
 		{
 			aux.list[i] = l.list[i];
 		}
 		
-		// Salvo e in pos
+		// Save new element in "pos"
 		aux.list[pos] = e;
 		
-		// Shifto a destra rispetto alla posizione di pos
+		// Saving the rest of the old d_array after "pos"
 		for(int i = pos+1; i < aux.size; ++i)
 		{
 			aux.list[i] = l.list[i-1];
 		}
 		
-		// Elimino il vecchio array dinamico ed applico le modifiche effettuate ad l
+		// Deleting old d_array and make l point to aux
 		delete[] l.list;
 		l = aux;
 		return;
 	}
 	
-	// Se non c'è bisogno di ridimensionamento
+	// Not resizing d_array
 	l.size++;
 	for(int i = l.size-1; i > pos; --i)
 		l.list[i] = l.list[i-1];
@@ -68,14 +68,13 @@ void list::add(int pos, Elem e, List& l)
 }
 
 
-// Restituisce la dimensione della lista
 int list::size(const List& l)
 {
 	return l.size;
 }
 
 
-// Verifico l'esistenza di un elemento con uno specifico nome
+// Checking if "e" exists in d_array "l"
 bool list::findElem(Elem e, List l)
 {
 	for(int i = 0; i < l.size; ++i)
@@ -88,7 +87,6 @@ bool list::findElem(Elem e, List l)
 }
 
 
-// Restituisce se la lista è vuota o meno
 bool list::isEmpty(List l)
 {
 	return !(size(l));
