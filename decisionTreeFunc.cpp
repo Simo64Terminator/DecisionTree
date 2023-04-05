@@ -1,11 +1,9 @@
-//Uso un albero della forma "Lista di Puntatori"
-
 #include "decisionTree.h"
 
 using namespace d_tree;
 
 
-/******************DEFINIZIONI STRUCT*****************/
+/******************STRUCT DEFINITIONS*****************/
 
 struct d_tree::treeNode{
 	Label label;
@@ -26,41 +24,39 @@ struct d_tree::coupleValues{
 
 
 
-/******************FUNZIONI ALBERO PREDITTIVO CON IMPLEMENTAZIONE LISTA DI PUNTATORI******************/
+/**************FUNCTIONS FOR PREDICTION TREE WITH POINTER TO EDGE AND TO NODE LIST IMPLEMENTATION**************/
 
-/**********FUNZIONI PRINCIPALI TDD TREE**********/
+/**********MAIN TOD TREE FUNCTIONS**********/
 
-/*****FUNZIONI DI CREAZIONE*****/
+/*****CREATION FUNCTIONS*****/
 
 
-//Creazione nuovo albero
+// New Tree
 Tree d_tree::createEmpty(){
 	return emptyTree;
 }
 
 
-//Aggiunta nuovo nodo
+// New node
 d_tree::ERROR d_tree::addElem(const Label fatherNode, const Label childNode, const Label edgeLabel, Tree &t){
 
-//Versione lista di archi
-
-	//Se l'albero è vuoto in partenza e si utilizza $#$#$ come nome del padre all'inizio, allora si entra dentro
+	// Generating root: if Tree is Empty and user uses $#$#$ as root's father, then we create the root
 	if((fatherNode == emptyLabel) && isEmpty(t)){
 		t = createNode(childNode);
 		return OK;
 	}
 	
-	//Se trovo un nodo con il nome di childNode allora non aggiungo
+	// If it finds an already existing node or edge, then element will not be inserted
 	if(member(childNode, t))
 		return FAIL;
 	
 	if(!checkEdgeLabel(edgeLabel))
 		return FAIL;
 	
-	//Recupero il nodo padre
+	// Searches father node
 	Tree auxT = getNode(fatherNode, t);
 	
-	//Se il nodo padre non è stato trovato, allora ritorno FAIL; altrimenti 
+	// If father node was not found, then returns FAIL, otherwise new node will be created 
 	if(auxT == emptyTree)
 		return FAIL;
 	else
@@ -73,7 +69,7 @@ d_tree::ERROR d_tree::addElem(const Label fatherNode, const Label childNode, con
 }
 
 
-//Creazione nuovo nodo
+// New Node
 Tree d_tree::createNode(Label l){
 	Tree aux = new treeNode;
 	aux->label = l;
@@ -82,61 +78,61 @@ Tree d_tree::createNode(Label l){
 }
 
 
-//Creo un nuovo arco etichettato
+// New labeled edge
 void d_tree::createEdge(Tree& father, Tree& child, const Label edgeLabel)
 {
-	//Creo un nuovo arco
+	// New Edge
 	Edge auxE = new treeEdge;
 	
-	//Applico l'etichetta
+	// Label applied
 	auxE->label = edgeLabel;
 	
-	//Connetto il figlio
+	// Connecting child
 	auxE->node = child;
 	
-	//Connetto il padre
+	// Connecting Father
 	auxE->nextEdge = father->edgeList;
 	father->edgeList = auxE;
 }
 
 
-/*****FUNZIONI DI DELETE*****/
+/*****DELETE FUNCTIONS*****/
 
 
-//Eliminazione nodo (caso radice senza figli)
+// Node elimination (starting with root without children)
 d_tree::ERROR d_tree::deleteElem(const Label l, Tree& t){
 	
-	//Se l'albero non è vuoto e l'elemento che vogliamo eliminare è la radice
+	// Special case: if Tree is not empty and label is equal to root's label, then we want to eliminate the root
 	if(!isEmpty(t) && t->label == l)
 	{
-		if(d_tree::degree(l, t) == 0)	//Si controlla se il grado dell'elemento, se è 0 eliminiamo
+		if(d_tree::degree(l, t) == 0)	// It checks degree of root: if 0 then it will be eliminated
 		{
 			delete t;
 			t = emptyTree;
 			return OK;
 		}
 		else
-			return FAIL;	//Altrimenti ritorniamo FAIL, perchè non sapremmo a che padre attaccare gli elementi figli della radice
+			return FAIL;	// Otherwise returns FAIL because we wouldn't know how to connect root's children
 	}
 	
-	return deleteElemAux(l, t); //Casi generali non relativi al caso radice
+	return deleteElemAux(l, t); // Other cases not related to root
 }
 
 
-//Eliminazione nodo ricorsivo (cerco un nodo che non sia la radice)
+// Recoursive node elimination (not for root)
 d_tree::ERROR d_tree::deleteElemAux(const Label l, Tree& t){
 	
-	//Se t è vuoto non si può cancellare nulla
+	// If tree or sub-tree is empty, returns FAIL
 	if(isEmpty(t)) return FAIL;
 	
-	//Analizzo i figli di t che possono avere label l, se esiste elimino quel figlio
+	// Checking if node t has a child with label l (the one we want to eliminate)
 	if(hasChildWithLabel(l, t))
 	{
 		deleteChild(l, t);
 		return OK;
 	}
 	
-	//Altrimenti continuo a scorrere tutti gli elementi finchè o cancello o quando non ci sono più figli da esplorare (suggerita simulazione per comprendere meglio)
+	// Otherwise keeps visiting tree unless finding a node with label l, or when no more nodes can be visited (simulation suggested to better comprehend the algorithm)
 	Edge child = t->edgeList;
 	
 	while(!isEmpty(child))
@@ -151,47 +147,47 @@ d_tree::ERROR d_tree::deleteElemAux(const Label l, Tree& t){
 }
 
 
-//Eliminazione Figlio di un nodo
+// Deleting node's child (remember that an edges list is used)
 void d_tree::deleteChild(const Label l, Tree& t)
 {
-//Versione Lista di archi
-
 	Edge auxE = t->edgeList;
 	Edge prevE = emptyEdge;
 
-	//Voglio scorrere fra gli archi di t finchè non trovo quello con connesso un nodo con label l
+	// Looking for an edge that has a node with label l connected
 	while((auxE->node)->label != l){
 		prevE = auxE;
 		auxE = auxE->nextEdge;
 	}
 	
-	//Preparo un puntatore al nodo collegato dall'arco
+	// Pointer to node to be eliminated
 	Tree auxT = auxE->node;
 	
 	
-	//Variabile ausiliaria che punta inizialmente al arco/nodo da cancellare (ci servirà per attaccare eventuali figli di figli) alla fine della lista
+	// Algorithm to save node's children: we connect his edge list to the end of father's edge list
 	Edge lastEdge = auxE;
 	
 	while(!isEmpty(lastEdge->nextEdge))
 		lastEdge = lastEdge->nextEdge;
 	
-	//Attacco il contenuto di edgeList di auxT alla fine della edgeList di t
+	// Saving to the end of edge list
 	lastEdge->nextEdge = auxT->edgeList;
 	
 	
+	// If the node to be deleted was in first position of the edgelist, then we need to make father pointing to its next child, otherwise it just updates a child nextEdge pointer
 	if(isEmpty(prevE))
 		t->edgeList = auxE->nextEdge;
 	else
 		prevE->nextEdge = auxE->nextEdge;
 	
-	//Elimino l'arco ed il nodo
+	
+	// Deleting
 	delete auxE;
 	delete auxT;
 
 }
 
 
-/*****FUNZIONI DI EDITING*****/
+/*****EDITING FUNCTIONS*****/
 
 
 //Modifica elemento nell'albero con etichetta l1, e cambio la sua etichetta con l2
@@ -212,7 +208,7 @@ d_tree::ERROR d_tree::editElem(const Label l1, const Label l2, Tree& t)
 }
 
 
-/*****FUNZIONI DI PRINT*****/
+/*****PRINTING FUNCTIONS*****/
 
 
 //Visualizzazione albero (completo)
@@ -299,7 +295,7 @@ void d_tree::setVariables(const Tree& t, list::List& lst){
 }
 
 
-/*****FUNZIONI AUSILIARIE*****/
+/*****AUX FUNCTIONS*****/
 
 
 //Restituisce se il nodo è vuoto o meno
@@ -490,12 +486,12 @@ d_tree::Label d_tree::normalizeValue(Label l)
 }
 
 
-/**********FUNZIONI PRINCIPALI TDD TREE**********/
+/**********MAIN FUNCTIONS FOR TOD TREE**********/
 
-/*****FUNZIONI PREDIZIONE MONO-SCELTA*****/
+/*****PREDICTION FUNCTIONS SINGLE CHOICE*****/
 
 
-//Ricorsiva (versione scelta una alla volta)
+// Ricorsiva (versione scelta una alla volta)
 d_tree::Label d_tree::compareMono(const Tree& t)
 {
 	//Se è vuoto ritorno emptyLabel
@@ -550,7 +546,7 @@ d_tree::Label d_tree::userChoice(const Tree& t)
 }
 
 
-/*****FUNZIONI PREDIZIONE CON INSIEMI DI COPPIE*****/
+/*****PREDICTION FUNCTIONS MULTIPLE CHOICE*****/
 
 
 //Funzione principale per la predizione
@@ -702,7 +698,7 @@ bool d_tree::isEmpty(const Couple c)
 }
 
 
-/*****FUNZIONI AUSILIARIE ALBERO PREDITTIVO (ENTRAMBE LE VERSIONI)*****/
+/*****AUX FUNCTIONS FOR PREDICTION TREE (FOR BOTH TYPES OF CHOICES)*****/
 
 
 //Comparazione valore inserito dall'utente e valore nell'arco
@@ -856,7 +852,7 @@ bool d_tree::compareInt(op o, int I1, int I2)
 }
 
 
-/******************FUNZIONI PER INPUT E OUTPUT******************/
+/******************INPUT/OUTPUT FUNCTIONS******************/
 
 
 //Inserimento effettivo

@@ -7,7 +7,7 @@ using namespace std;
 
 namespace list{
 
-//Definizioni array dinamico
+// Dynamic Array definitions
 
 	const int BLOCKDIM = 100;
 
@@ -26,13 +26,13 @@ namespace list{
 
 //Funzioni lista
 
-	List createEmpty();					//Creo la lista vuota
-	void addBack(Elem, List&);			//Aggiungo un elemento in fondo alla lista
-	void add(int, Elem, List&);			//Aggiungo un elemento data la posizione richiesta
+	List createEmpty();					// Create empty d_Array
+	void addBack(Elem, List&);			// Add element at the bottom of d_array
+	void add(int, Elem, List&);			// Add element in n position of d_array
 	bool findElem(Elem, List);
 	bool isEmpty(List);
 
-	int size(const List&);				//Restituisco la dimensione della lista
+	int size(const List&);				// Returns d_array size
 
 }
 

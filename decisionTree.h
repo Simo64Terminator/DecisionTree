@@ -15,7 +15,7 @@ using namespace list;
 
 namespace d_tree{
 
-//Definizioni
+// Base Definitions
 
 	typedef int choice;
 
@@ -27,7 +27,7 @@ namespace d_tree{
 	
 	const Label emptyLabelE = "#$#$#";
 	
-	//Definizioni nodo albero
+	// Tree Node Definitions
 	
 		struct treeNode;
 
@@ -35,7 +35,7 @@ namespace d_tree{
 
 		const Tree emptyTree = nullptr;
 		
-	//Definizioni archi albero
+	// Tree Edge Definitions
 	
 		struct treeEdge;
 		
@@ -43,14 +43,14 @@ namespace d_tree{
 		
 		const Edge emptyEdge = nullptr;
 
-	//Definizioni algoritmo di predizione
+	// Prediction Algorithm Definitions
 
-		struct op;	//Definizione operatore di confronto
+		struct op;	// Comparison Operator
 
-		//Definizione tipo di operazione
+		// Operation Types
 		enum Kind {OP_UGUALE, OP_DIVERSO, OP_MINORE, OP_MAGGIORE, OP_MAGGIOREUGUALE, OP_MINOREUGUALE};
 		
-		//Definizione coda per le coppie di inserimento
+		// Definitions used to determine value and operator
 		struct coupleValues;
 		
 		struct op{
@@ -63,11 +63,11 @@ namespace d_tree{
 		const Couple emptyCouple = nullptr;
 
 
-//Funzioni per albero (ordinate secondo definizione nell'header)
+// Tree Functions (ordinate secondo definizione nell'header)
 
-	//Principali del TDD Tree
+	// TOD Tree Base Functions
 	
-		//Funzioni di creazione
+		// Creation Functions
 			
 			Tree createEmpty();
 	
@@ -78,7 +78,7 @@ namespace d_tree{
 			void createEdge(Tree&, Tree&, const Label);
 	
 	
-		//Funzioni di delete
+		// Delete functions
 	
 			ERROR deleteElem(const Label, Tree&);
 	
@@ -87,12 +87,12 @@ namespace d_tree{
 			void deleteChild(const Label, Tree&);
 	
 	
-		//Funzioni di editing
+		// Editing Functions
 		
 			ERROR editElem(const Label, const Label, Tree&);
 	
 	
-		//Funzioni di print
+		// Printing Functions
 			
 			void printTree(const Tree&);
 	
@@ -103,7 +103,7 @@ namespace d_tree{
 			void setVariables(const Tree&, list::List&);
 	
 	
-		//Funzioni ausiliarie del TDD Tree
+		// Auxiliary TOD Tree Functions
 
 			bool isEmpty(Tree);
 
@@ -126,16 +126,16 @@ namespace d_tree{
 			Label normalizeValue(Label);
 
 
-	//Funzioni albero predittivo (mono scelta e scelta con insiemi di coppie)
+	// Prediction Tree Functions (single choice and multiple choice)
 	
-		//Funzioni albero predittivo Mono-Scelta
+		// Single Choice Functions
 	
 			Label compareMono(const Tree&);
 	
 			Label userChoice(const Tree&);
 	
 	
-		//Funzioni albero predittivo con insiemi di coppie
+		// Multiple Choice functions
 	
 			Label compareMulti(const Tree&, Couple&);
 	
@@ -152,11 +152,11 @@ namespace d_tree{
 			bool isEmpty(const Couple);
 	
 	
-		//Funzioni ausiliarie albero predittivo (entrambe le versioni)
+		// Auxiliary Functions
 	
 			bool compareEdge(Label, Edge);
 	
-			op opDefinition(const Label);
+			op opDefinition(const Label);		// Defines Operator
 	
 			bool isNumber(const Label);
 	
@@ -164,7 +164,7 @@ namespace d_tree{
 }
 
 
-//Funzioni per input/output, non facenti parte del TDD Tree
+// Input/Output Functions (not part of TOD Tree)
 d_tree::Tree readFromFile(string);
 
 #endif
