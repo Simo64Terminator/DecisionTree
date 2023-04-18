@@ -535,18 +535,18 @@ d_tree::Label d_tree::userChoice(const Tree& t)
 /*****PREDICTION FUNCTIONS MULTIPLE CHOICE*****/
 
 
-//Funzione principale per la predizione
+// Main prediction function
 d_tree::Label d_tree::compareMultiMain(const Tree& t)
 {
-	//Preparazione coda insieme di coppie
+	// Preparing couples queue
 	Couple couples = setCouples(couples);
 	
-	//Predizione usando coda insieme di coppie
+	// Prediction using couples queue
 	return compareMulti(t, couples);
 }
 
 
-//Predizione ricorsiva con insiemi di coppie
+// Predizione ricorsiva con insiemi di coppie
 d_tree::Label d_tree::compareMulti(const Tree& t, Couple& c)
 {
 	//Se è vuoto, allora ritorno emptyLabel
