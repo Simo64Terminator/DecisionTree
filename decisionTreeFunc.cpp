@@ -315,7 +315,7 @@ bool d_tree::member(const Label l, const Tree& t){
 	// Points to edge list
 	Edge aux = t->edgeList;
 	
-	// Scorrimento finchè non trovo un elemento con quell'etichetta o finchè non arrivo fino alla fine delle chiamate ricorsive
+	// Scrolling until it finds an element with label l, or at the end of recoursive calls
 	while(aux != emptyEdge)
 	{
 		if(!member(l, aux->node))
@@ -328,20 +328,18 @@ bool d_tree::member(const Label l, const Tree& t){
 }
 
 
-//Recupero l'indirizzo del nodo che cerco (ricorsivo, suggerito disegno di un albero di questo tipo per comprendere)
+// Returns node with label l (A drawing of this kind of tree is suggested)
 Tree d_tree::getNode(const Label l, const Tree& t){
 	
-//Versione lista di archi
-	
-	//Se l'albero è vuoto o l'etichetta è vuota, restituisco un nodo vuoto
+	// If Tree is empty, or label is emptyt, returns emptyTree (equals to emptyNode)
 	if(isEmpty(t) || l==emptyLabel)
 		return emptyTree;
 		
-	//Se trovo un nodo con l'etichetta l, allora ritorno l'indirizzo del nodo
+	// If finds a node with label l, returns it
 	if(t->label == l)
 		return t;
 	
-	//Suggerita simulazione con disegno per una comprensione maggiore
+	// Suggested simulation to better understand the algorithm
 	Edge aux = t->edgeList;
 	Tree resNode;
 	
@@ -351,17 +349,16 @@ Tree d_tree::getNode(const Label l, const Tree& t){
 		if(resNode == emptyTree)
 			aux = aux->nextEdge;
 		else
-			return resNode;						//Resistuisco il nodo nel caso lo trovo, riavvolgendo tutte le chiamate ricorsive
+			return resNode;					// Returns node if found
 	}
 	
-	// Ho esaurito la lista degli archi, torno indietro di una ricorsione
+	// Empty edge list, going back from one recoursion
 	return emptyTree;
 }
 
 
 // Return node's degree
 int d_tree::degree(const Label l, const Tree& t){
-	
 	
 	if(!member(l,t))
 		return -1;
