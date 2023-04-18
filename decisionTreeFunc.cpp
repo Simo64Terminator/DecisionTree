@@ -508,14 +508,14 @@ d_tree::Label d_tree::compareMono(const Tree& t)
 }
 
 
-// Ausiliaria, usata per far scegliere all'utente una stringa
+// Auxiliary function, used for letting user choose a string
 d_tree::Label d_tree::userChoice(const Tree& t)
 {	
-	// Scorrimento nella lista degli archi
+	// Scrolling edge list
 	Edge tmp = t->edgeList;
 
-	//Mostra le possibili variabili
-	cout << "\n - Tipo: " << t->label << " - Le possibili decisioni sono:\n";
+	// Shows possible variables
+	cout << "\n - Type: " << t->label << " - Possibile decisions are:\n";
 	while(!isEmpty(tmp)){
 		cout << " - " << tmp->label << "\n";
 		tmp = tmp->nextEdge;
@@ -523,7 +523,7 @@ d_tree::Label d_tree::userChoice(const Tree& t)
 	cout << "\n";
 	
 	// Inserting
-	cout << "Inserisci il valore/la stringa: ";
+	cout << "Insert value/string: ";
 	Label aux;
 	cin >> aux;
 	removeBlanksAndLower(aux);
