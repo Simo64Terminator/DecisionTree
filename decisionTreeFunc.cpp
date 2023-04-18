@@ -379,7 +379,7 @@ list::List d_tree::children(const Label l, const Tree& t)
 		// Points to l's children
 		Edge child = auxT->edgeList;
 		
-		// Slides on all l's children
+		// Scrolling on all l's children
 		while(!isEmpty(child))
 		{
 			list::addBack((child->node)->label, lst);
@@ -421,11 +421,11 @@ bool d_tree::checkEdgeLabel(const Label edgeLabel)
 	char firstChar = edgeLabel[0];
 
 	switch(firstChar){
-		case '!':							//Diverso
+		case '!':							// Different from
 			if(edgeLabel[1] == '=')
 				break;
 			else
-				return false;				// Not found
+				return false;					// Not found
 			break;
 		case '=':							// Equal
 			break;
@@ -477,19 +477,19 @@ d_tree::Label d_tree::normalizeValue(Label l)
 /*****PREDICTION FUNCTIONS SINGLE CHOICE*****/
 
 
-// Ricorsiva (versione scelta una alla volta)
+// Recoursive (one choice at a time)
 d_tree::Label d_tree::compareMono(const Tree& t)
 {
-	//Se è vuoto ritorno emptyLabel
+	// If empty returns emptyLabel
 	if(isEmpty(t)) return emptyLabel;
 	
-	//Se viene trovato un nodo foglia, allora ritorno l'etichetta dell'arco
+	// If a leaf node is found, then returns edge label
 	if(isEmpty(((t->edgeList)->node)->edgeList)) return (t->edgeList)->label;
 	
-	//Viene scelta l'etichetta dall'utente
+	// User chooses a label
 	Label l = userChoice(t);
 	
-	//Scorrimento nell'albero
+	// Travelling in tree
 	Edge auxE = t->edgeList;
 	Label result = emptyLabel;
 
@@ -508,10 +508,10 @@ d_tree::Label d_tree::compareMono(const Tree& t)
 }
 
 
-//Ausiliaria, usata per far scegliere all'utente una stringa
+// Ausiliaria, usata per far scegliere all'utente una stringa
 d_tree::Label d_tree::userChoice(const Tree& t)
 {	
-	//Scorrimento nella lista degli archi
+	// Scorrimento nella lista degli archi
 	Edge tmp = t->edgeList;
 
 	//Mostra le possibili variabili
@@ -522,7 +522,7 @@ d_tree::Label d_tree::userChoice(const Tree& t)
 	}
 	cout << "\n";
 	
-	//Inserimento
+	// Inserting
 	cout << "Inserisci il valore/la stringa: ";
 	Label aux;
 	cin >> aux;
