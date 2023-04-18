@@ -231,12 +231,12 @@ void d_tree::printTree(const Tree& t, int depth)
 		
 	cout << t->label << endl;
 	
-	// Scorrimento
+	// Scrolling starting from edgeList
 	Edge auxE = t->edgeList;
 	
 	while(!isEmpty(auxE))
 	{
-		// Mostro l'etichetta dell'arco e quali nodi collega
+		// Shows edge label, and what nodes are connected to it
 		for(int i=0; i<depth; ++i)
 			cout << indentT;
 		cout << "(" << auxE->label << ")";
@@ -259,9 +259,7 @@ void d_tree::printVariables(const Tree& t){
 		cout << "\nNo variables";
 	else
 		for(int i = 0; i < lst.size; ++i)
-		{
-			cout << "\n - Variabile " << i+1 << ": " << lst.list[i];	//Mostro il contenuto della lista
-		}
+			cout << "\n - Variabile " << i+1 << ": " << lst.list[i];	// Shows list content
 	
 	cout << "\n";
 }
@@ -270,19 +268,17 @@ void d_tree::printVariables(const Tree& t){
 // Aux function for printVariables (recoursive)
 void d_tree::setVariables(const Tree& t, list::List& lst){
 	
-	//Se è vuoto, ritorna
+	// If empty returns
 	if(isEmpty(t) || (isEmpty(t->edgeList))) return;
 	
-	//Recupero l'etichetta del nodo senza l'underscore
+	// Saving node label without underscore
 	Label l = normalizeVariable(t->label);
 	
-	//Se non c'è un elemento nella lista con quell'etichetta, allora aggiungo nella lista, altrimenti non faccio nulla
+	// If there's no element in the list with same label, then updates the list, otherwise nothing will happen
 	if(!list::findElem(l, lst))
-	{
 		list::addBack(l, lst);
-	}
 	
-	//Chiamata ricorsiva per esplorare l'albero
+	// Recoursive call to explore tree
 	Edge auxE = t->edgeList;
 	while(!isEmpty(auxE)){
 		setVariables(auxE->node, lst);
@@ -305,21 +301,21 @@ bool d_tree::isEmpty(Edge e)
 }
 
 
-// Cerco un nodo con un certo label (ricorsivo)
+// Finds a node with label l (recoursive)
 bool d_tree::member(const Label l, const Tree& t){
 
-	//Se l'albero è vuoto restituisco false (non ho trovato il nodo)
+	// If tree or subtree are empty, returns false
 	if(isEmpty(t))
 		return false;
 
-	//Se trovo un nodo con label l, allora ritorno true
+	// If finds a node with label l, returns true
 	if(t->label == l)
 		return true;
 		
-	//Punta a scorrere le liste di archi
+	// Points to edge list
 	Edge aux = t->edgeList;
 	
-	//Scorrimento finchè non trovo un elemento con quell'etichetta o finchè non arrivo fino alla fine delle chiamate ricorsive
+	// Scorrimento finchè non trovo un elemento con quell'etichetta o finchè non arrivo fino alla fine delle chiamate ricorsive
 	while(aux != emptyEdge)
 	{
 		if(!member(l, aux->node))
