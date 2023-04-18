@@ -190,20 +190,20 @@ void d_tree::deleteChild(const Label l, Tree& t)
 /*****EDITING FUNCTIONS*****/
 
 
-//Modifica elemento nell'albero con etichetta l1, e cambio la sua etichetta con l2
+// Searching a node with label l1, and changes it with l2
 d_tree::ERROR d_tree::editElem(const Label l1, const Label l2, Tree& t)
 {
-	//Cerco il nodo con l'etichetta da modificare
+	// Finds Node
 	Tree auxT = getNode(l1, t);
 	
-	//Se trovo il nodo modifico
+	// If node exists
 	if(!isEmpty(auxT))
 	{
 		auxT->label = l2;
 		return OK;
 	}
 	
-	//Se non trovo il nodo ritorno FAIL
+	// If node doesn't exist
 	return FAIL;
 }
 
@@ -211,34 +211,32 @@ d_tree::ERROR d_tree::editElem(const Label l1, const Label l2, Tree& t)
 /*****PRINTING FUNCTIONS*****/
 
 
-//Visualizzazione albero (completo)
+// Main function used to simplify function call printTree(t,0) (where 0 is used for indentation)
 void d_tree::printTree(const Tree& t)
 {
-	//Richiamo la funzione ausiliaria con indentazione a 0 (output più leggibile)
 	printTree(t, 0);
 }
 
 
-//Funzione ausiliare per la printTree
+// Aux recoursive function for printTree(t)
 void d_tree::printTree(const Tree& t, int depth)
 {
-	//Se è vuoto ritorno
 	if(isEmpty(t)) return;
 	
 	string indentT = "--";
 	
-	//Mostro di quale padre è il il figlio con delle indentazioni
+	// Showing tree depth with indentations ("--")
 	for(int i=0; i<depth; ++i)
 		cout << indentT;
 		
 	cout << t->label << endl;
 	
-	//Scorrimento
+	// Scorrimento
 	Edge auxE = t->edgeList;
 	
 	while(!isEmpty(auxE))
 	{
-		//Mostro l'etichetta dell'arco e quali nodi collega
+		// Mostro l'etichetta dell'arco e quali nodi collega
 		for(int i=0; i<depth; ++i)
 			cout << indentT;
 		cout << "(" << auxE->label << ")";
@@ -249,18 +247,16 @@ void d_tree::printTree(const Tree& t, int depth)
 }
 
 
-//Stampa le variabili dell'albero
 void d_tree::printVariables(const Tree& t){
 	
-	//Creo una lista vuota
+	// Creates an empty list
 	list::List lst = list::createEmpty();
 	
-	//Inserisco in lst le variabili dell'albero
+	// Inserting variables into lst
 	setVariables(t, lst);
 	
-	//Se non ci sono elementi, allora non posso mostrare nulla
 	if(list::isEmpty(lst))
-		cout << "\nVariabili inesistenti";
+		cout << "\nNo variables";
 	else
 		for(int i = 0; i < lst.size; ++i)
 		{
@@ -271,7 +267,7 @@ void d_tree::printVariables(const Tree& t){
 }
 
 
-//Funzione ausiliaria per la printVariables (ricorsiva/information hiding)
+// Aux function for printVariables (recoursive)
 void d_tree::setVariables(const Tree& t, list::List& lst){
 	
 	//Se è vuoto, ritorna
@@ -298,20 +294,18 @@ void d_tree::setVariables(const Tree& t, list::List& lst){
 /*****AUX FUNCTIONS*****/
 
 
-//Restituisce se il nodo è vuoto o meno
 bool d_tree::isEmpty(Tree t){
 	return(t==emptyTree);
 }
 
 
-//Restituisce se l'arco è vuoto o meno
 bool d_tree::isEmpty(Edge e)
 {
 	return(e == emptyEdge);
 }
 
 
-//Cerco un nodo con un certo label (ricorsivo)
+// Cerco un nodo con un certo label (ricorsivo)
 bool d_tree::member(const Label l, const Tree& t){
 
 	//Se l'albero è vuoto restituisco false (non ho trovato il nodo)
@@ -364,74 +358,73 @@ Tree d_tree::getNode(const Label l, const Tree& t){
 			return resNode;						//Resistuisco il nodo nel caso lo trovo, riavvolgendo tutte le chiamate ricorsive
 	}
 	
-	//Ho esaurito la lista degli archi, torno indietro di una ricorsione
+	// Ho esaurito la lista degli archi, torno indietro di una ricorsione
 	return emptyTree;
 }
 
 
-//Restituisco il grado del nodo
+// Return node's degree
 int d_tree::degree(const Label l, const Tree& t){
 	
-	//Se il nodo ha grado 0, allora ritorno -1, altrimenti ritorno la dimensione della lista dei figli del nodo
+	
 	if(!member(l,t))
 		return -1;
 	else
-		return list::size(children(l, t));
+		return list::size(children(l, t)); // Returns node's children list dimension 
 }
 
 
-//Restituisco una lista con tutti i figli di un nodo
+// Returns node's children list
 list::List d_tree::children(const Label l, const Tree& t)
 {
-	//Cerco il nodo padre e preparo una lista vuota
+	// Finds node and prepares an empty list
 	Tree auxT = getNode(l, t);
 	list::List lst = list::createEmpty();
 	
 	if(!isEmpty(auxT))
 	{
-		//Punto ai figli di l
+		// Points to l's children
 		Edge child = auxT->edgeList;
-			//Non convertite
-		//Scorro per tutti i figli di l
+		
+		// Slides on all l's children
 		while(!isEmpty(child))
 		{
-			list::addBack((child->node)->label, lst);	//Aggiungo il label dei figli di l alla lista
+			list::addBack((child->node)->label, lst);
 			child = child->nextEdge;
 		}
 	}
 	
-	//Ritorno la lista
 	return lst;
 }
 
 
-//Cerco se il nodo ha un figlio con label l
+// Searching child with label l (recoursive)
 bool d_tree::hasChildWithLabel(const Label l, const Tree& t)
 {
-	//Se è vuoto, allora torno false
+	// If tree is empty, then returing false
 	if(isEmpty(t)) return false;
 	
-	//Comincio a scorrere la lista dei figli del nodo padre
+	// Starting from first child from father's child list
 	Edge child = t->edgeList;
 	
-	//Scorrimento
+	// Searching in list
 	while(!isEmpty(child))
 	{
 		if((child->node)->label == l)
-			return true;//Restituisco una lista con tutti i figli di un nodo
+			return true; // Found child with label l, returning true...
 		else
 			child = child->nextEdge;
 	}
 
-	//Se non lo trovo, ritorno false
+	// ...otherwise returning false
 	return false;
 }
 
 
-//Controlla se il primo carattere dell'arco è un operatore o meno
+// Checking if first character from edge label is an operator
 bool d_tree::checkEdgeLabel(const Label edgeLabel)
 {
-	//Recupero il primo carattere dell'etichetta dell'arco
+	// Recovering first character from edge label
 	char firstChar = edgeLabel[0];
 
 	switch(firstChar){
@@ -439,18 +432,18 @@ bool d_tree::checkEdgeLabel(const Label edgeLabel)
 			if(edgeLabel[1] == '=')
 				break;
 			else
-				return false;				//Non è stato trovato
+				return false;				// Not found
 			break;
-		case '=':							//Uguale
-			break;
-			
-		case '<':							//Minore
+		case '=':							// Equal
 			break;
 			
-		case '>':							//Maggiore
+		case '<':							// Less than
+			break;
+			
+		case '>':							// More than
 			break;
 		
-		default:							//Non è stato trovato
+		default:							// Not found
 			return false;
 	}
 	
@@ -458,28 +451,28 @@ bool d_tree::checkEdgeLabel(const Label edgeLabel)
 }
 
 
-//Normalizza la stringa eliminando l'underscore che indica il numero della stringa
+// Eliminating underscore character from string number
 d_tree::Label d_tree::normalizeVariable(Label l)
 {
 	Label aux = l;
 	
-	//Cerco l'ultimo underscore
+	// Searching last underscore
 	int found = aux.find_last_of("_");
 
-	//Ritorno la sottostringa da 0 alla posizione dell'ultimo underscore
+	// Returning substring from 0 to underscore_position-1
 	aux = aux.substr(0, found);
 
 	return aux;
 }
 
 
-//Normalizzo l'etichetta value togliendo l'operatore di confronto
+// Eliminating confront operator from value label
 d_tree::Label d_tree::normalizeValue(Label l)
 {
-	//Definisco l'operazione contenuta nell'etichetta
+	// Defining operation in label
 	op operation = opDefinition(l);
 	
-	//Isolo l'etichetta senza l'operatore di confronto
+	// Isolating label without confront operator
 	Label normalizedValue = l.substr(operation.dim, l.size());
 	
 	return normalizedValue;
@@ -852,7 +845,7 @@ bool d_tree::compareInt(op o, int I1, int I2)
 }
 
 
-/******************INPUT/OUTPUT FUNCTIONS******************/
+/******************INPUT FROM FILE FUNCTIONS******************/
 
 
 //Inserimento effettivo
@@ -903,10 +896,10 @@ Tree readFromStream(istream& str)
 }
 
 
-//Controllo prima di effettuare la creazione dell'albero
+// Checking if file exists, then this function calls readFromStream to create the tree
 Tree readFromFile(string nome_file)
 {
-	ifstream ifs(nome_file.c_str()); //Apertura di uno stream associato ad un file in lettura
+	ifstream ifs(nome_file.c_str()); // Opening input file stream
 	if(!ifs)
 	{
 		cout << "\nErrore apertura file, verificare di avere inserito un nome corretto\n";
