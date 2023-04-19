@@ -670,14 +670,14 @@ d_tree::Couple d_tree::setCouples(Couple& c)
 }
 
 
-//Creazione coda vuota
+// Creating empty queue
 d_tree::Couple d_tree::createEmptyCouple()
 {
 	return emptyCouple;
 }
 
 
-//Ritorna se la coda è vuota o menoero di decisione così come descritto sopra e modificarlo con le operazioni
+// Returns if queue is empty
 bool d_tree::isEmpty(const Couple c)
 {
 	return (c == emptyCouple);
@@ -687,10 +687,10 @@ bool d_tree::isEmpty(const Couple c)
 /*****AUX FUNCTIONS FOR PREDICTION TREE (FOR BOTH TYPES OF CHOICES)*****/
 
 
-//Comparazione valore inserito dall'utente e valore nell'arco
+// Comparing value inserted by user with value in edge
 bool d_tree::compareEdge(Label l, Edge auxE)
 {
-	//Definisco l'operazione contenuta nell'arco
+	// Definisco l'operazione contenuta nell'arco
 	op operation = opDefinition(auxE->label);
 	
 	//Isolo l'etichetta nell'arco senza l'operatore di confronto
@@ -729,7 +729,7 @@ bool d_tree::compareEdge(Label l, Edge auxE)
 }
 
 
-//Definizione operatore nell'arco
+// Defining operator in edge
 d_tree::op d_tree::opDefinition(const Label a)
 {
 	//Preparo lo struct per definire il tipo di operazione e la dimensione dell'operatore nella stringa
