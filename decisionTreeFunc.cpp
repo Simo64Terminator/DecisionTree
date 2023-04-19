@@ -546,26 +546,26 @@ d_tree::Label d_tree::compareMultiMain(const Tree& t)
 }
 
 
-// Predizione ricorsiva con insiemi di coppie
+// Recoursive prediction using couples sets
 d_tree::Label d_tree::compareMulti(const Tree& t, Couple& c)
 {
-	//Se è vuoto, allora ritorno emptyLabel
+	// If empty returns emptyLabel
 	if(isEmpty(t)) return emptyLabel;
 	
-	////Se viene trovato un nodo foglia (che precede l'arco con la soluzione della predizione), allora ritorno l'etichetta dell'arco
+	//// If a leaf was found (which is after an edge with the solution), returns edgeLabel
 	if(isEmpty(((t->edgeList)->node)->edgeList)) return (t->edgeList)->label;
 	
-	//Se la coda si svuota prima del dovuto, allora ritorno emptyLabel
+	// If queue is empty before it should has, returns emptyLabel
 	if(isEmpty(c)) return emptyLabel;
 	
-	//Preparo la coppia
+	// Preparing couple
 	Couple tmpC = dequeue(c);
 	
-	//Se la variabile nella coppia non è uguale alla variabile del nodo corrente, allora ritorno emptyLabel
+	// If variable in couple not equal to variable in current node, then returns emptyLabel
 	if(normalizeVariable(t->label) != tmpC->variable)
 		return emptyLabel;
 
-	//Scorrimento
+	// Scrolling
 	Edge auxE = t->edgeList;
 	Label result = emptyLabel;
 	
