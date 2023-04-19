@@ -546,7 +546,7 @@ d_tree::Label d_tree::compareMultiMain(const Tree& t)
 }
 
 
-// Recoursive prediction using couples sets
+// Recoursive prediction using couples
 d_tree::Label d_tree::compareMulti(const Tree& t, Couple& c)
 {
 	// If empty returns emptyLabel
@@ -632,27 +632,27 @@ d_tree::Couple d_tree::dequeue(Couple& c)
 }
 
 
-//Preparazione elementi coda insiemi di coppie
+// Preparing elements for couple queue
 d_tree::Couple d_tree::setCouples(Couple& c)
 {
-	//Creo la coda vuota
+	// Creating empty queue
 	c = createEmptyCouple();
 	
-	//Preparo le etichette della variabile e del valore
+	// Initializes variable and value labels
 	Label lvariabile, lvalore;
 	
-	//Per mostrare quante coppie sono già state inserite
+	// To show how many couples were already inserted
 	int num = 1;
 	
 	do
 	{
-		cout << "Inserisci la variabile della coppia " << num << " (inserire $#$#$ per terminare l'inserimento): ";
+		cout << "Insert the variable in the couple " << num << " (insert $#$#$ to stop inserting): ";
 		cin >> lvariabile;
 		
-		//Se viene inserito il valore corrispondente a emptyLabel ($#$#$) significa che ho terminato l'inserimento
+		// If emptyLabel is inserted ($#$#$), the loop will be stopped
 		if(lvariabile != emptyLabel)
 		{
-			cout << "Inserisci il valore della coppia " << num << ": ";
+			cout << "Insert the value in the couple " << num << ": ";
 			cin >> lvalore;
 			
 			removeBlanksAndLower(lvariabile);
@@ -665,7 +665,7 @@ d_tree::Couple d_tree::setCouples(Couple& c)
 	}
 	while(lvariabile != emptyLabel);
 	
-	//Ritorno la coda
+	// Returns queue
 	return c;
 }
 
