@@ -610,10 +610,10 @@ void d_tree::enqueue(const Label lvariabile, const Label lvalore, Couple& c)
 }
 
 
-//Eliminazione nella coda degli insiemi di coppie
+// Dequeue from couple queue
 d_tree::Couple d_tree::dequeue(Couple& c)
 {
-	//Creo una copia della coppia
+	// Creating a copy of couple
 	Couple tmp = c;
 	
 	Couple auxC = new coupleValues;
@@ -621,13 +621,13 @@ d_tree::Couple d_tree::dequeue(Couple& c)
 	auxC->variable = tmp->variable;
 	auxC->next = emptyCouple;
 	
-	//Sposto il puntatote della coda al prossimo elemento
+	// Changing pointer to next element of the queue
 	c = tmp->next;
 	
-	//Elimino la coppia dalla coda
+	// Eliminates couple from queue
 	delete tmp;
 	
-	//Ritorno la copia
+	// Returns copy
 	return auxC;
 }
 
