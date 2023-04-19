@@ -584,23 +584,23 @@ d_tree::Label d_tree::compareMulti(const Tree& t, Couple& c)
 }
 
 
-//Aggiunta nella coda degli insiemi di coppie
+// Adding to couple queue
 void d_tree::enqueue(const Label lvariabile, const Label lvalore, Couple& c)
 {
-	//Preparazione Coppia
+	// Preparing couple
 	Couple newCouple = new coupleValues;
 	newCouple->variable = lvariabile;
 	newCouple->value = lvalore;
 	newCouple->next = emptyCouple;
 	
-	//Se la coda è vuota, assegno il puntatore al nuovo elemento
+	// If queue is empty, assigning pointer to new element
 	if(isEmpty(c))
 	{
 		c = newCouple;
 		return;
 	}
 	
-	//Scorro finchè non arrivo in fondo ed assegno la coppia al suo posto
+	// Scrolling unless arrives to the end, assigning couple
 	Couple auxC = c;
 	
 	while(auxC->next != emptyCouple)
