@@ -669,13 +669,11 @@ d_tree::Couple d_tree::setCouples(Couple& c)
 	return c;
 }
 
-
 // Creating empty queue
 d_tree::Couple d_tree::createEmptyCouple()
 {
 	return emptyCouple;
 }
-
 
 // Returns if queue is empty
 bool d_tree::isEmpty(const Couple c)
@@ -686,44 +684,43 @@ bool d_tree::isEmpty(const Couple c)
 
 /*****AUX FUNCTIONS FOR PREDICTION TREE (FOR BOTH TYPES OF CHOICES)*****/
 
-
 // Comparing value inserted by user with value in edge
 bool d_tree::compareEdge(Label l, Edge auxE)
 {
-	// Definisco l'operazione contenuta nell'arco
+	// Defining operation in edge
 	op operation = opDefinition(auxE->label);
 	
-	//Isolo l'etichetta nell'arco senza l'operatore di confronto
+	// Isolating edge label without comparison operator
 	Label edgeValue = auxE->label.substr(operation.dim, auxE->label.size());
 	
-	//Se l'etichetta che ha inserito l'utente è un numero allora entro qui...
+	// If label inserted by user is a number, then program goes here...
 	if(isNumber(l))
 	{
-		//Converto l'etichetta dell'utente in un numero
+		// Converting user label in a number
 		int lInt = stoi(l);
 		
 		int eInt;
 		
-		//Se anche l'etichetta dell'arco è un numero, converto l'etichetta dell'arco...
+		// If edge label is a number too, converts it...
 		if(isNumber(edgeValue))
 			eInt = stoi(edgeValue);
 		else
-			return false;	//Nel caso l'etichetta dell'arco sia alfanumerica (non posso confrontare un numero con una stringa alfanumerica) ritorno false
+			return false;	// ... otherwise (if edge label is alphanumeric) returns false (can't compare alphanumeric with numeric label)
 		
-		//Ritorno se il confronto ha successo o meno
+		// Returns if comparison is succedeed or not
 		return(compareInt(operation, lInt, eInt));
 	}
-	else		//Altrimenti se l'utente ha scritto un'etichetta alfanumerica entro qui
+	else		// Otherwise if user wrote an alphanumeric label, program enters here
 	{
-		//Se l'etichetta nell'arco è un numero (non posso confrontare una stringa alfanumerica con un numero), ritorno false
+		// If edge label is a number, returns false (can't compare alphanumeric with numeric label)
 		if(isNumber(edgeValue))
 			return false;
 		
-		//Se l'operazione contenuta nell'arco è diversa da 'uguale' o 'diverso', ritorno false
+		// If operation in edge isn't 'equal' or 'not equal', return false
 		if(operation.k != OP_UGUALE && operation.k != OP_DIVERSO)
 			return false;
 		
-		//Ritorno se il confronto ha successo o meno
+		// Returns if compare operation succedes or not
 		return((operation.k == OP_UGUALE && !l.compare(edgeValue)) || (operation.k == OP_DIVERSO && l.compare(edgeValue)));
 	}
 }
