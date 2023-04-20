@@ -729,10 +729,10 @@ bool d_tree::compareEdge(Label l, Edge auxE)
 // Defining operator in edge
 d_tree::op d_tree::opDefinition(const Label a)
 {
-	//Preparo lo struct per definire il tipo di operazione e la dimensione dell'operatore nella stringa
+	// Preparo lo struct per definire il tipo di operazione e la dimensione dell'operatore nella stringa
 	op o;
 	
-	//A seconda del caso definisco in modo diverso l'operazione
+	// Choosing correct operation from label a
 	switch(a[0]){
 		case '!':
 			if(a[1] == '=')
@@ -741,7 +741,7 @@ d_tree::op d_tree::opDefinition(const Label a)
 				o.k = OP_DIVERSO;
 			}
 			else
-				throw runtime_error("\nErrore - Carattere 'diverso' incompleto");
+				throw runtime_error("\nError, character 'not equal' not complete");
 				
 			break;
 		case '=':
@@ -773,27 +773,26 @@ d_tree::op d_tree::opDefinition(const Label a)
 			}
 			break;
 		default:
-			throw runtime_error("\nErrore - Carattere di comparazione non trovato in un arco\n");
+			throw runtime_error("\nError - Compare character not found\n");
 			break;
 	}
 	
-	//Ritorno la definizione dell'operatore
+	// Returns operator definition
 	return o;	
 }
 
 
-//Comprensione se la stringa inserita è un valore o una stringa
+// Comprensione se la stringa inserita è un valore o una stringa
 bool d_tree::isNumber(const Label l)
 {
-	//Se trovo anche solo una lettera nella stringa, significa che è una stringa alfanumerica, e non un numero 
-	//(Aggiunta post-correzione)
+	// Se trovo anche solo una lettera nella stringa, significa che è una stringa alfanumerica, e non un numero 
 	for(unsigned int i = 0; i < l.size(); ++i)
 	{
 		if((l[i] >= 'a') && (l[i] <= 'z'))
 			return false;
 	}
 
-	//Non è stata trovata nessuna lettera nella stringa inserita, quindi è un numero
+	// Non è stata trovata nessuna lettera nella stringa inserita, quindi è un numero
 	return true;
 }
 
