@@ -802,27 +802,27 @@ bool d_tree::compareInt(op o, int I1, int I2)
 {
 	// Analizing operation type and compares labels l1 and l2
 	switch(o.k){
-		case OP_UGUALE:
+		case EQUAL_OP:
 			if(I1 == I2)
 				return true;
 			break;
-		case OP_DIVERSO:
+		case NOT_EQUAL_OP:
 			if(I1 != I2)
 				return true;
 			break;
-		case OP_MINOREUGUALE:
+		case LESS_OR_EQUAL_THAN_OP:
 			if(I1 <= I2)
 				return true;
 			break;
-		case OP_MINORE:
+		case LESS_THAN_OP:
 			if(I1 < I2)
 				return true;
 			break;
-		case OP_MAGGIOREUGUALE:
+		case MORE_OR_EQUAL_THAN_OP:
 			if(I1 >= I2)
 				return true;
 			break;
-		case OP_MAGGIORE:
+		case MORE_THAN_OP:
 			if(I1 > I2)
 				return true;
 			break;
@@ -837,7 +837,7 @@ bool d_tree::compareInt(op o, int I1, int I2)
 /******************INPUT FROM FILE FUNCTIONS******************/
 
 
-//Inserimento effettivo
+// Inserting
 Tree readFromStream(istream& str)
 {
 	Tree t = d_tree::createEmpty();
@@ -847,17 +847,16 @@ Tree readFromStream(istream& str)
 	
 	istringstream instream;
 	
-	//Inserimento radice nell'albero (convenzione: la prima linea rappresenta la radice)
+	// Inserting root in tree (convention: first line in file is root)
 	instream.clear();
 	instream.str(line);
 	instream >> rootLabel;
 	
-	//Aggiunta post-correzione
 	removeBlanksAndLower(rootLabel);
 	
 	addElem(emptyLabel, rootLabel, emptyLabelE, t);
 	
-	//Inserimento altri elementi
+	// Inserting inner nodes and edges
 	getline(str, line);
 	instream.clear();
 	instream.str(line);
