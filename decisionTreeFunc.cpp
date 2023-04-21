@@ -797,10 +797,10 @@ bool d_tree::isNumber(const Label l)
 }
 
 
-//Ritorno se il confronto è vero o falso
+// Returns if comparison is true or false
 bool d_tree::compareInt(op o, int I1, int I2)
 {
-	//Si analizza il tipo di operazione e si confrontano in maniera adeguata le etichette
+	// Analizing operation type and compares labels l1 and l2
 	switch(o.k){
 		case OP_UGUALE:
 			if(I1 == I2)
