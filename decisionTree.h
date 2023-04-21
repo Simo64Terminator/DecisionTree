@@ -48,7 +48,7 @@ namespace d_tree{
 		struct op;	// Comparison Operator
 
 		// Operation Types
-		enum Kind {OP_UGUALE, OP_DIVERSO, OP_MINORE, OP_MAGGIORE, OP_MAGGIOREUGUALE, OP_MINOREUGUALE};
+		enum Kind {EQUAL_OP, NOT_EQUAL_OP, LESS_THAN_OP, MORE_THAN_OP, MORE_OR_EQUAL_THAN_OP, LESS_OR_EQUAL_THAN_OP};
 		
 		// Definitions used to determine value and operator
 		struct coupleValues;
