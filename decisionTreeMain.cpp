@@ -4,7 +4,7 @@ using namespace d_tree;
 
 int main(){
 
-	const string menu = "-------------------------------------------------------------------\n\t\t\t\tMENU\n-------------------------------------------------------------------\n1. Lettura albero di decisione da file\n2. Inserimento di un nodo etichettato childNode attaccato, usando un arco etichettato edgeLabel, ad un padre etichettato fatherNode\n3. Cancellazione di un nodo dall'albero\n4. Modifica di un nodo dall'albero\n5. Visualizzazione albero di decisione\n6. Stampa variabili dell'albero di decisione\n7. Effettua predizione inserendo i valori uno alla volta\n8. Effettua predizione inserendo tutti i valori all'inizio\n0. Uscita\n\nFornisci la tua scelta ---> ";
+	const string menu = "-------------------------------------------------------------------\n\t\t\t\tMENU\n-------------------------------------------------------------------\n1. Read decision tree from file\n2. Insert a labeled node childNode, attached to a node fatherName using an edge edgeLabel\n3. Delete a node\n4. Edit a node\n5. Print current decision tree\n6. Print variables in current tree\n7. Start prediction by inserting values one at a time\n8. Start prediction by inserting all values from start\n0. Exit\n\nChoose ---> ";
 
 	//Definizione variabili interfaccia (ch = menu, l1,l2,la = labelPadre/labelFiglio/labelEdge, ld = delete, le1,le2 = edit, nome_file = nome del .txt usato, lp = labelPrediction)
 	choice ch;
