@@ -782,17 +782,17 @@ d_tree::op d_tree::opDefinition(const Label a)
 }
 
 
-// Comprensione se la stringa inserita è un valore o una stringa
+// Checking if label l is a value or a string
 bool d_tree::isNumber(const Label l)
 {
-	// Se trovo anche solo una lettera nella stringa, significa che è una stringa alfanumerica, e non un numero 
+	// If one letter is found, l is an alphanumeric string, returns false 
 	for(unsigned int i = 0; i < l.size(); ++i)
 	{
 		if((l[i] >= 'a') && (l[i] <= 'z'))
 			return false;
 	}
 
-	// Non è stata trovata nessuna lettera nella stringa inserita, quindi è un numero
+	// No letter was found, l is a number
 	return true;
 }
 
