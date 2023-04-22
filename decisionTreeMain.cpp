@@ -89,30 +89,32 @@ int main(){
 				break;
 			
 			case 4:
-				//Modifica di un nodo dall'albero
+				// Editing node
 				
-				cout << "\nInserisci il nome del nodo da modificare: ";
+				cout << "\nInsert node name to be edited: ";
 				cin >> le1;
-				cout << "\nInserisci la nuova etichetta da assegnare: ";
+				cout << "\nInsert new label to be assigned: ";
 				cin >> le2;
 				
 				if(!cin)
 				{
-					cout << "Errore inserimento dati\n";
+					cout << "Error in inserting data\n";
 					break;
 				}
 				
 				removeBlanksAndLower(le1);
 				removeBlanksAndLower(le2);
+				
 				if(editElem(le1, le2, tree) == FAIL)
-					cout << "\nErrore nella modifica, operazione annullata\n";
+					cout << "\nFailure! (editing error)\n";
 				else
-					cout << "\nOperazione avvenuta con successo!\n";
+					cout << "\nSuccess!\n";
+				
 				cout << "\n";
 				break;
 			
 			case 5:
-				//Visualizzazione albero di decisione
+				// Printing decision tree
 			
 				cout << "\n";
 				printTree(tree);
@@ -120,47 +122,46 @@ int main(){
 				break;
 			
 			case 6:
-				//Stampa variabili dell'albero di decisione
+				// Printing variables only
 				
 				printVariables(tree);
 				cout << "\n";
 				break;
 			
 			case 7:
-				//Effettua predizione inserendo i valori uno alla volta
+				// Predict by inserting one value at a time
 			
 				lp = compareMono(tree);
 					
 				if(lp == emptyLabel)
-					cout << "\nLa predizione non può avere luogo in quanto esiste un nodo per il quale non c'è un arco percorribile\n";
+					cout << "\nFailure! (There's no valid path)\n";
 				else
 				{
 					lp = normalizeValue(lp);
-					cout << "\nLa predizione finale è: " << lp << "\n";
+					cout << "\nFinal prediction is: " << lp << "\n";
 				}
 				
 				cout << "\n";
 				break;
 			
 			case 8:
-				//Effettua predizione inserendo tutti i valori
+				// Predict by inserting all values
 				
 				lp = compareMultiMain(tree);
 				
 				if(lp == emptyLabel)
-					cout << "\nLa predizione non può avere luogo in quanto esiste un nodo per il quale non c'è un arco percorribile\n";
+					cout << "\nFailure! (There's no valid path)\n";
 				else
 				{
 					lp = normalizeValue(lp);
-					cout << "\nLa predizione finale è: " << lp << "\n";
+					cout << "\nFinal prediction is: " << lp << "\n";
 				}
 				
 				cout << "\n";
 				break;
 				
 			default:
-				cout << "\nHai scelto un carattere invalido\n\n";
-				
+				cout << "\nInvalid character!\n\n";
 		}
 		
 		cout << menu;
