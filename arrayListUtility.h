@@ -24,9 +24,9 @@ namespace list{
 	typedef d_arr List;
 
 
-//Funzioni lista
+// List Functions
 
-	List createEmpty();					// Create empty d_Array
+	List createEmpty();				// Create empty d_Array
 	void addBack(Elem, List&);			// Add element at the bottom of d_array
 	void add(int, Elem, List&);			// Add element in n position of d_array
 	bool findElem(Elem, List);
